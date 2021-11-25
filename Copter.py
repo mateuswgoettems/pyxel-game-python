@@ -12,6 +12,29 @@ class Copter:
         self.reset()
         pyxel.run(self.start_screen, self.draw)
 
+    def start_screen(self):
+        self.is_paused = True
+        self.sfx.play_sfx(state="paused")
+        pyxel.cls(0)
+        pyxel.text(70, 50, "Press Q to Quit the Game", 8)
+        pyxel.text(70, 57, "Press S to Start the Game", 3)
+        pyxel.text(10, 115, "Press Z to Fly", 3)
+        pyxel.text(10, 125, "Press P to pause", 3)
+        pyxel.text(180, 125, "Made By: Mateus", 3)
+
+        if pyxel.btn(pyxel.KEY_Q):
+            pyxel.quit()
+
+        if pyxel.btnp(pyxel.KEY_S, 30, 30):
+            self.is_paused = not (self.is_paused)
+            if self.is_paused:
+                self.sfx.play_sfx(state="paused")
+            else:
+                self.sfx.play_sfx(state="alive")
+                pyxel.run(self.update, self.draw)
+        if self.is_paused:
+            return
+
     def reset(self):
         self.sfx = music.Music()
         self.sfx.play_sfx()
@@ -70,29 +93,6 @@ class Copter:
         pyxel.text(100, 57, "R: restart", 3)
         pyxel.text(100, 64, "SCORE: ", 9)
         pyxel.text(124, 64, str(self.score), 7)
-
-    def start_screen(self):
-        self.is_paused = True
-        self.sfx.play_sfx(state="paused")
-        pyxel.cls(0)
-        pyxel.text(70, 50, "Press Q to Quit the Game", 8)
-        pyxel.text(70, 57, "Press S to Start the Game", 3)
-        pyxel.text(10, 115, "Press Z to Fly", 3)
-        pyxel.text(10, 125, "Press P to pause", 3)
-        pyxel.text(180, 125, "Made By: Mateus", 3)
-
-        if pyxel.btn(pyxel.KEY_Q):
-            pyxel.quit()
-
-        if pyxel.btnp(pyxel.KEY_S, 30, 30):
-            self.is_paused = not (self.is_paused)
-            if self.is_paused:
-                self.sfx.play_sfx(state="paused")
-            else:
-                self.sfx.play_sfx(state="alive")
-                pyxel.run(self.update, self.draw)
-        if self.is_paused:
-            return
 
     def draw(self):
         if self.is_paused:

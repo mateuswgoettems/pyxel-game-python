@@ -4,8 +4,11 @@ class Plane:
         self.gravity = 0.1
         self.velo = 0
 
-    def update(self, velo = None):
-        if velo != None:
-            self.velo = velo
-        self.position = (self.position[0], self.position[1] + self.velo)
-        self.velo += self.gravity
+    def update(self, velo=0):
+        try:
+            if velo != 0:
+                self.velo = velo
+            self.position = (self.position[0], self.position[1] + self.velo)
+            self.velo += self.gravity
+        except ValueError:
+            print(ValueError)
